@@ -18,7 +18,7 @@ from keras.optimizers import Adam
 
 
 try:
-    tokenizer = transformers.AutoTokenizer.from_pretrained('outputs/tokenizers')
+    tokenizer = transformers.AutoTokenizer.from_pretrained('../outputs/tokenizers')
 except (OSError, ValueError):
     print("tokenizer not found")
     exit(1)
