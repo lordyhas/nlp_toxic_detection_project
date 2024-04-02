@@ -59,8 +59,6 @@ def build_bert_model(max_len=192, optimizer=Adam(learning_rate=1e-5)):
   # Compiler le modèle avec une loss adaptée à la classification binaire
   model.compile(optimizer = optimizer, loss=loss, metrics=['accuracy'])
 
-  # Afficher le résumé du modèle
-
   return model
 
 new_model = build_bert_model()  # Créez le modèle avec la même architecture
