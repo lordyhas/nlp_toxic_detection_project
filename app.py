@@ -164,7 +164,7 @@ def open_guide():
         pdfView.iconbitmap("image.ico")
         pdfView.geometry("620x750")
         v1 = pdf.ShowPdf()
-        v2 = v1.pdf_view(pdfView,pdf_location = r"Guide.pdf", width = 180, height = 100)
+        v2 = v1.pdf_view(pdfView,pdf_location = r"nlp_bert.pdf", width = 180, height = 100)
         
         
         v2.pack()
