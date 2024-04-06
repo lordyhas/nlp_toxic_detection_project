@@ -5,7 +5,7 @@ from tqdm import tqdm
 import numpy as np # linear algebra
 import pandas as pd # data processing, CSV file I/O (e.g. pd.read_csv)
 import tensorflow as tf
-from keras.layers import Dense, Input, Dropout
+from keras.layers import Dense, Input, Dropout, Lambda
 from keras.optimizers import Adam
 from keras.optimizers import AdamW
 from keras.optimizers import Nadam
@@ -70,7 +70,6 @@ class Dataset:
         self.test_data = test_data
         self.batch_size = batch_size
         
-    
     def train(self):
         return (
             tf.data.Dataset
@@ -136,26 +135,17 @@ class BertModel(object):
         # Charger le modèle pré-entraîné DistilBERT et le tokenizer
         distilbert_model = TFDistilBertModel.from_pretrained('distilbert-base-multilingual-cased')
         #tokenizer = DistilBertTokenizer.from_pretrained('distilbert-base-multilingual-cased')
+        
 
         model = tf.keras.Sequential([
             # La couche d'entrée
             Input(shape=(self.max_len,), dtype=tf.int32, name="input_word_ids"),
 
-            # Ajouter la couche DistilBERT (notez que nous utilisons distilbert_model.layers[0] pour accéder à la couche de transformer)
             # La couche DistilBERT
             distilbert_model.layers[0],
 
             # La couche pour obtenir le premier token [CLS]
-            tf.keras.layers.Lambda(lambda seq: seq[:, 0, :]),
-
-            #Dense(256, activation="relu", kernel_regularizer=regularizers.l2(0.01)),
-            #Dropout(0.5),
-            #Dense(128, activation="relu", kernel_regularizer=regularizers.l2(0.01)),
-            #Dropout(0.5),
-            #Dense(64,  activation="relu", kernel_regularizer=regularizers.l2(0.01)),
-
-            # Ajouter des couches supplémentaires si nécessaire
-            # Par exemple, une couche Dense pour la classification
+            Lambda(lambda seq: seq[:, 0, :]),
             # La couche de sortie
             Dense(1, activation='sigmoid')
         ])
