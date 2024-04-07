@@ -114,6 +114,7 @@ class Dataset:
 
 
 class BertModel(object):
+    dir_path = "../"
     EPOCHS = 15
     BATCH_SIZE = 32 #* strategy.num_replicas_in_sync
     MAX_LEN = 192
@@ -124,7 +125,7 @@ class BertModel(object):
         self.max_len = max_len
     
        
-    def build(self, model:int = None):
+    def build(self, model:int = 1):
         if model == 1 :
             return self.__model_1()
         
@@ -185,7 +186,7 @@ class BertModel(object):
 
         return np.array(all_ids)
     
-    @staticmethod
+    @classmethod
     def tokenizer():
         # First load the real tokenizer
         try:
@@ -196,7 +197,7 @@ class BertModel(object):
             tokenizer.save_pretrained('outputs/tokenizers')
         return tokenizer
     
-    @staticmethod
+    @classmethod
     def text_tokenizer():
         text_tokenizer = BertWordPieceTokenizer('outputs/tokenizers/vocab.txt', lowercase=False)
         return text_tokenizer
